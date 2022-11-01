@@ -1,4 +1,4 @@
-﻿using HappyEnglisgWebApi.Model;
+﻿using HappyEnglishWebApi.Model;
 
 namespace HappyEnglisgWebApi.Repositories
 {

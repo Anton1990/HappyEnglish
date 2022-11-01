@@ -12,7 +12,6 @@ namespace HappyEnglisgWebApi.Controllers
     public class AuthController : ControllerBase
 
     {
-       
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel user)
         {
@@ -37,7 +36,6 @@ namespace HappyEnglisgWebApi.Controllers
             }
             return Unauthorized();
         }
-
 
     }
 }

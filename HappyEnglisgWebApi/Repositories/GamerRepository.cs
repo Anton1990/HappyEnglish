@@ -1,63 +1,87 @@
-﻿using HappyEnglisgWebApi.Model;
+﻿using HappyEnglishWebApi.DAL;
+using HappyEnglishWebApi.Model;
 using Microsoft.EntityFrameworkCore;
-using HappyEnglishClassLibrary;
+using Microsoft.Extensions.Logging;
 
 namespace HappyEnglisgWebApi.Repositories
 {
     public class GamerRepository : IGamerRepostory
     {
-
-        private readonly DBInteractor _context;
-        private Class1 myclass = new Class1();
-        public GamerRepository(DBInteractor context)
+        private readonly ApplicationDbContext _context;
+        public GamerRepository(ApplicationDbContext context)
         {
             _context = context;
 
         }
+        async Task<IEnumerable<Gamer>> IbaseRepository<Gamer>.GetAll()
+        {
+            return await _context.Gamer.ToListAsync();
+        }
+        async Task<Gamer> IbaseRepository<Gamer>.Create(Gamer gamer)
+        {
+            if (_context.Gamer.Count() == 0)
+            {
+                gamer.Id = 1;
+            }
+            else
+                gamer.Id = _context.Gamer.OrderBy(x => x.Id).Last().Id + 1;
 
-        public int value()
+             _context.Gamer.Add(gamer);
+            await _context.SaveChangesAsync();
+            return gamer;
+        }
+        public bool Update(long id, Gamer gamer)
+        {
+            if (id != gamer.Id)
+            {
+                return false;
+            }
+            _context.Entry(gamer).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChangesAsync();
+            }
+
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Gamer.Any(e => e.Id == id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
+
+        }
+        async Task<Gamer> IbaseRepository<Gamer>.Get(long id)
+        {   
+            var gamer = await _context.Gamer.FindAsync(id);
+            return gamer; 
+        }
+        public async Task Delete(long id)
         {
             
-            return myclass.summ(1, 2);
-           // return 22;
+                var gamer = await _context.Gamer.FindAsync(id);
+                if (gamer == null)
+                {
+                return;
+                }
 
+                _context.Gamer.Remove(gamer);
+                await _context.SaveChangesAsync();
+
+                return;
+       
         }
-
-        bool IbaseRepository<Gamer>.Create(Gamer entity)
+        public async Task DeleteAll()
         {
-            throw new NotImplementedException();
-        }
-
-        bool IbaseRepository<Gamer>.Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Gamer IbaseRepository<Gamer>.Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-     
-
-
-        IEnumerable<Gamer> GetAll()
-        {
-            // throw new NotImplementedException();
-            return _context.Gamer.ToList();
-
-        }
-
-        IEnumerable<Gamer> IbaseRepository<Gamer>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IbaseRepository<Gamer>.Update(Gamer entity)
-        {
-            throw new NotImplementedException();
+            _context.Database.ExecuteSqlRaw("DELETE FROM Gamer");
+            await _context.SaveChangesAsync();
+            return;
         }
     }
 }

@@ -4,26 +4,41 @@ using Microsoft.IdentityModel.Tokens;
 using HappyEnglisgWebApi.Repositories;
 using HappyEnglisgWebApi.Model;
 using System.Configuration;
+using Microsoft.EntityFrameworkCore;
+using HappyEnglishWebApi.DAL;
+
+
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
-                    .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings1.json");
+                    .AddJsonFile("appsettings.json");
+                   
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DBInteractor>();
-builder.Services.AddDbContext<DBInteractor1>();
+var connection = builder.Configuration.GetConnectionString("GameDbConnect");
+builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlite(connection));
 builder.Services.AddScoped<IGamerRepostory, GamerRepository>();
-
-
-
-
+//Logger
+var path = builder.Configuration.GetConnectionString("FilePath");
+builder.Logging.ClearProviders();
+Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+            .Enrich.FromLogContext()
+            .WriteTo.File(path)
+            .WriteTo.Console()
+            .CreateLogger();
+builder.Logging.AddSerilog(Log.Logger);
 
 builder.Services.AddAuthentication(opt => {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,12 +70,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-//app.Map("/json", (IConfiguration appConfig) => $"{appConfig["person"]} - {appConfig["company"]}");
-app.MapGet("/json", (IConfiguration appConfig) => $"{appConfig["person"]} - {appConfig["company"]}");
+
 
 app.Run();

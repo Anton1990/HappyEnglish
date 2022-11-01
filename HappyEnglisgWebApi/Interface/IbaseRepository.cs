@@ -1,13 +1,15 @@
-﻿namespace HappyEnglisgWebApi.Repositories
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace HappyEnglisgWebApi.Repositories
 {
     public interface IbaseRepository<T>
     {
-        bool Create(T entity);
-        bool Update(T entity);
-        T Get(int id);
-        IEnumerable<T> GetAll();
-        bool Delete(int id);
-        int value();
-
+        Task<T> Create(T entity);
+        bool Update(long id,T entity);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> Get(long id);
+        Task Delete(long id);
+        Task DeleteAll();
+             
     }
 }

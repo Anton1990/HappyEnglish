@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace HappyEnglisgWebApi.Migrations
+namespace HappyEnglishWebApi.DAL.Migrations
 {
     public partial class InitialCreate : Migration
     {
