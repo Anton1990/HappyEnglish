@@ -40,8 +40,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\HappyEnglishClassLibrary\HappyEnglishClassLibrary\HappyEnglishWebApi.Model.csproj" />
     <ProjectReference Include="..\HappyEnglishWebApi.DAL\HappyEnglishWebApi.DAL.csproj" />
+    <ProjectReference Include="..\HappyEnglishWebApi.Model\HappyEnglishWebApi.Model\HappyEnglishWebApi.Model\HappyEnglishWebApi.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HappyEnglishWebApi.Model">
+      <HintPath>..\..\..\..\source\repos\HappyEnglishClassLibrary\HappyEnglishClassLibrary\bin\Debug\net6.0\HappyEnglishWebApi.Model.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
