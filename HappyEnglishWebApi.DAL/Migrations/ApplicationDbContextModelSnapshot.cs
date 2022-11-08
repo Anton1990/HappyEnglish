@@ -35,6 +35,9 @@ namespace HappyEnglishWebApi.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.ToTable("Gamer");
 
                     b.HasData(

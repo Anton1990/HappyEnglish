@@ -45,6 +45,12 @@ namespace HappyEnglishWebApi.DAL.Migrations
                 table: "Word",
                 columns: new[] { "Id", "Value" },
                 values: new object[] { 1L, "Anton" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gamer_Id",
+                table: "Gamer",
+                column: "Id",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
