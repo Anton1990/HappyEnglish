@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyEnglisgWebApi", "HappyEnglisgWebApi\HappyEnglisgWebApi.csproj", "{730390D7-D995-4CD4-9A24-0AE1160DD6C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyEnglishWebApi", "HappyEnglisgWebApi\HappyEnglishWebApi.csproj", "{730390D7-D995-4CD4-9A24-0AE1160DD6C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyEnglishWebApi.Model", "..\..\..\source\repos\HappyEnglishClassLibrary\HappyEnglishClassLibrary\HappyEnglishWebApi.Model.csproj", "{D089E170-1C57-4080-8203-D1D2A942E3C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyEnglishWebApi.DAL", "HappyEnglishWebApi.DAL\HappyEnglishWebApi.DAL.csproj", "{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyEnglishWebApi.DAL", "HappyEnglishWebApi.DAL\HappyEnglishWebApi.DAL.csproj", "{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyEnglishWebApi.Model", "HappyEnglishWebApi.Model\HappyEnglishWebApi.Model\HappyEnglishWebApi.Model.csproj", "{210FBC64-0742-4B08-BD3E-968BD546C4A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{730390D7-D995-4CD4-9A24-0AE1160DD6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730390D7-D995-4CD4-9A24-0AE1160DD6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730390D7-D995-4CD4-9A24-0AE1160DD6C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D089E170-1C57-4080-8203-D1D2A942E3C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D089E170-1C57-4080-8203-D1D2A942E3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D089E170-1C57-4080-8203-D1D2A942E3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D089E170-1C57-4080-8203-D1D2A942E3C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39627E93-69BF-4C23-BD37-2E1A78C0EF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210FBC64-0742-4B08-BD3E-968BD546C4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210FBC64-0742-4B08-BD3E-968BD546C4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210FBC64-0742-4B08-BD3E-968BD546C4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210FBC64-0742-4B08-BD3E-968BD546C4A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

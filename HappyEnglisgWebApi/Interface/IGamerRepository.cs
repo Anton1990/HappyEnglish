@@ -1,6 +1,6 @@
 ﻿using HappyEnglishWebApi.Model;
 
-namespace HappyEnglisgWebApi.Repositories
+namespace HappyEnglishWebApi.Repositories
 {
     public interface IGamerRepostory:IbaseRepository<Gamer>
     {

@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace HappyEnglisgWebApi.Migrations.DBInteractorMigrations
+namespace HappyEnglishWebApi.DAL.Migrations
 {
-    public partial class MyMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,12 @@ namespace HappyEnglisgWebApi.Migrations.DBInteractorMigrations
                 table: "Word",
                 columns: new[] { "Id", "Value" },
                 values: new object[] { 1L, "Anton" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gamer_Id",
+                table: "Gamer",
+                column: "Id",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

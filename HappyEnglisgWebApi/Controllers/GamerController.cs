@@ -1,96 +1,70 @@
-﻿using HappyEnglishWebApi.Model;
+﻿using HappyEnglisgWebApi.Repositories;
+using HappyEnglishWebApi.CustomExeption;
+using HappyEnglishWebApi.Model;
+using HappyEnglishWebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Serilog;
+using Serilog.Core;
 
 namespace HappyEnglisgWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamerController : ControllerBase
+    //[ExceptionFilter]
+    [ServiceFilter(typeof(CustomFilterDI))]
+
+        public class GamerController : ControllerBase
     {
-
-        private readonly DBInteractor _context;
-
-        public GamerController(DBInteractor context)
+        private readonly IGamerRepostory _gamerRepository;
+        public GamerController(IGamerRepostory gamerRepostory)
         {
-            _context = context;
+            _gamerRepository = gamerRepostory;
         }
-      
+
         [HttpGet]
-        #region
-        public async Task<ActionResult<IEnumerable<Gamer>>> GetGamerAll()
+        [Route("GetGamerById")]
+        public async Task<IActionResult> GetGamerById(long id)
         {
-            return await _context.Gamer.ToListAsync();
+            var gamer = await _gamerRepository.Get(id);
+            return Ok(gamer);
         }
-        #endregion
 
-        [HttpGet("{id}")]
-        #region
-        public async Task<ActionResult<Gamer>> GetGamer(long id)
+        [HttpGet]
+        [Route("GetAllGamer")]
+        public async Task<IActionResult> GetAllGamer()
         {
-            var gamer = await _context.Gamer.FindAsync(id);
-
-            if (gamer == null)
-            {
-                return NotFound();
-            }
-
-            return gamer;
+            return Ok(await _gamerRepository.GetAll());
         }
-        #endregion
 
         [HttpPost]
-        #region
-        public async Task<ActionResult<Gamer>> PostGamer(Gamer gamer)
-
-        {   
-            //increment ID
-            if (_context.Gamer.Count()==0)
-            {
-                gamer.Id =1;
-            }
-            else
-                gamer.Id = _context.Gamer.OrderBy(x => x.Id).Last().Id + 1;
-
-            _context.Gamer.Add(gamer);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetGamer", new { id = gamer.Id }, gamer);
+        [Route("Create")]
+        public async Task<IActionResult> Create(Gamer gamer)
+        {
+            return Ok(await _gamerRepository.Create(gamer));
         }
-        #endregion
-        
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(long id, Gamer gamer)
+        {
+            return Ok(await _gamerRepository.Update(id, gamer));
+        }
+         
         [HttpDelete("{id}")]
-        #region
         public async Task<IActionResult> DeleteGamer(long id)
         {
-            var gamer = await _context.Gamer.FindAsync(id);
-            if (gamer == null)
-            {
-                return NotFound();
-            }
-
-            _context.Gamer.Remove(gamer);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            await _gamerRepository.Delete(id);
+            return Ok();
         }
-        #endregion
 
-        [HttpDelete, Authorize]
-        [Route("DelAll/Jwt")]
-
-        #region
-        public async Task<IActionResult> DeleteAll()
-        {                                             
-            _context.Database.ExecuteSqlRaw("DELETE FROM Gamer");
-            await _context.SaveChangesAsync();
-            return NoContent();
+        [HttpDelete]
+        [Authorize]
+        public Task DeleteAll()
+        {
+            return _gamerRepository.DeleteAll();
         }
-        #endregion
-
 
     }
-}
+} 
+
+
